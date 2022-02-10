@@ -35,3 +35,9 @@ button {
     font-weight: bold;
     font-size: 20em;
   }
+  .white {
+      color: white;
+  }
+  .red {
+      color: red;
+  }

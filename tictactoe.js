@@ -13,7 +13,7 @@ function checkWinner(state) {
 
   for (let i=0; i<win.length; i++) {
     const [a, b, c] = win[i];
-    console.log(`State is ${state[a]} ${state[b]} ${state[c]}`);
+    // State shows 1 or 0 or null, reflecting which player has played which space
     if ((state[a] == state[b] && state[a] == state[c]) && state[a] != null) {
     console.log("Winner found");
     return state[a];
@@ -32,29 +32,19 @@ const Square = ( {id, player, newState} ) => {
       )
     }
   */
-  const [color, setColor] = React.useState("green");
+  
   const [status, setStatus] = React.useState(null);
   const xo =["O", "X"];
-  const palet = ["red","blue","green"];
-  const getRandomColor = () => palet[Math.floor(Math.random()*3)];
 
-  React.useEffect(() => {
-    console.log(`Render ${id}`);
-    return () => console.log(`unmounting Square ${id}`);
-  });
   return (
     <button
       onClick={e => {
-        let col = getRandomColor();
-        setColor(col);
-        // Creating an object to pass into setState through the newSate function
         let nextPlayer = newState(id);
         setStatus(nextPlayer);
-        e.target.style.background = col;
       }}
     >
-      <h1>{xo[status]}</h1> </button>
-  )
+      <h1 className={status == 0 ? "white" : "red"}>{xo[status]}</h1> </button>
+  ) 
 }
 
 const Board = () => {
@@ -68,7 +58,6 @@ const Board = () => {
 
   //This function updates the total state
   const newState = idOfSquare => {
-    // Here we set the state by spreading current state and adding the new object ... see Square above for details
     let thePlayer = player;
     state[idOfSquare] = player; //player is present player
     setState(state); // state is array of 0 or 1 or null
@@ -77,7 +66,7 @@ const Board = () => {
     return thePlayer; // Returns the present player
   }
   function renderSquare(i) {
-    //The {i} being passed into Square is props, and can be accessed
+    //The {i}, etc, being passed into Square is props, and can be accessed
     //as props.id inside the Square function
     return <Square id={i} player={player} newState={newState}> </Square>;
   }
